@@ -1,15 +1,15 @@
 class WeightsController < ApplicationController
   def index
-    @weights = Weight.all
+    @weights = Weight.all.order(date: :desc)
   end
 
   def create
     @weight = Weight.new(weight_params)
 
     if @weight.save
-      render json: @weight
+      redirect_to weights_path, notice: 'Weight was successfully added.'
     else
-      render json: { errors: @weight.errors.full_messages }, status: :unprocessable_entity
+      render :new
     end
   end
 

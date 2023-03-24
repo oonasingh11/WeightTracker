@@ -1,23 +1,26 @@
 <h1>Weight Tracker</h1>
 
-<%= form_with url: weights_path, method: :post, remote: true do |f| %>
+<%= form_with url: weights_path, method: :post do |f| %>
   <p>
     <%= f.label :value %><br>
-    <%= f.text_field :value %>
+    <%= f.number_field :value %>
   </p>
-
   <p>
     <%= f.label :date %><br>
     <%= f.date_field :date %>
   </p>
-
   <p>
-    <%= f.submit 'Save' %>
+    <%= f.submit %>
   </p>
 <% end %>
 
-<ul>
-  <% @weights.each do |weight| %>
-    <li><%= weight.value %> lbs on <%= weight.date %></li>
-  <% end %>
-</ul>
+<% if @weights.any? %>
+  <h2>Weights:</h2>
+  <ul>
+    <% @weights.each do |weight| %>
+      <li><%= weight.value %> on <%= weight.date.strftime("%m/%d/%Y") %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No weights yet.</p>
+<% end %>
